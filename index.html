@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hayoon Design LLC
+</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <!-- <li><a href="#cv">C.V.</a></li> -->
+        </ul>
+        <!-- <button class="contact-btn">Contact Me</button> -->
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-logo">
+            <img src="img/logo2.jpg" alt="Hayoon Design LLC Logo" class="hero-logo-img">
+        </div>
+        <div class="hero-content">
+            <div class="hero-left">
+                <h1 class="hero-title">Hayoon Design LLC</h1>
+            </div>
+            <div class="hero-right">
+                <div class="hero-image-container">
+                    <img src="img/portrait-placeholder.jpg" alt="Adrian Chenna" class="hero-image">
+                </div>
+                <p class="hero-description">Where art and design meet with purpose, we shape meaningful spaces that honor culture, evoke emotion, and invite new ways of seeing.</p>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Navigate to the next section</span>
+        </div>
+    </header>
+
+    <!-- Work Section -->
+    <main class="work-container" id="work">
+        <div class="work-header">
+            <h2 class="work-title">Portfolio</h2>
+            <p class="work-subtitle">Selected works showcasing design excellence</p>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item" data-category="sculpture">
+                <div class="portfolio-image">
+                    <img src="img/Moon+in+Glass+Chamber.jpg" alt="Moon in Glass Chamber">
+                    <div class="portfolio-overlay">
+                        <h3>Moon in Glass Chamber</h3>
+                        <p>Sculpture Design</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="sculpture">
+                <div class="portfolio-image">
+                    <img src="img/Roundabout+Sculpture.jpg" alt="Roundabout Sculpture">
+                    <div class="portfolio-overlay">
+                        <h3>Roundabout Sculpture</h3>
+                        <p>Public Art Installation</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="branding">
+                <div class="portfolio-image">
+                    <img src="img/Guardians+and+Landscape.JPG" alt="Brand Identity 1">
+                    <div class="portfolio-overlay">
+                        <h3>Brand Identity</h3>
+                        <p>Logo Design</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="branding">
+                <div class="portfolio-image">
+                    <img src="img/Archive_3.jpg" alt="Brand Identity 2">
+                    <div class="portfolio-overlay">
+                        <h3>Brand Identity</h3>
+                        <p>Logo Design</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="digital">
+                <div class="portfolio-image">
+                    <img src="img/Vestibule_Option1.jpg" alt="Spectral Project">
+                    <div class="portfolio-overlay">
+                        <h3>Spectral</h3>
+                        <p>Digital Experience</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="digital">
+                <div class="portfolio-image">
+                    <img src="img/#" alt="Nevora Project">
+                    <div class="portfolio-overlay">
+                        <h3>Nevora</h3>
+                        <p>Brand Identity</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="digital">
+                <div class="portfolio-image">
+                    <img src="img/#" alt="Luminara Project">
+                    <div class="portfolio-overlay">
+                        <h3>Luminara</h3>
+                        <p>Brand Identity</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="portrait">
+                <div class="portfolio-image">
+                    <img src="img/#" alt="Portrait Work">
+                    <div class="portfolio-overlay">
+                        <h3>Portrait Study</h3>
+                        <p>Photography</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </main>
+
+    <!-- Portfolio Modal -->
+    <div class="portfolio-modal" id="portfolioModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <button class="modal-close" id="modalClose">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalTitle">Project Title</h2>
+                    <p class="modal-category" id="modalCategory">Category</p>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="modal-image-container">
+                        <img class="modal-main-image" id="modalMainImage" src="" alt="">
+                    </div>
+                    
+                    <div class="modal-details">
+                        <div class="modal-description" id="modalDescription">
+                            <h3>Project Overview</h3>
+                            <p>Detailed project description will appear here...</p>
+                        </div>
+                        
+                        <div class="modal-info">
+                            <div class="info-item">
+                                <h4>Client</h4>
+                                <p id="modalClient">Client Name</p>
+                            </div>
+                            <div class="info-item">
+                                <h4>Year</h4>
+                                <p id="modalYear">2024</p>
+                            </div>
+                            <div class="info-item">
+                                <h4>Services</h4>
+                                <p id="modalServices">Design Services</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Images Section -->
+                <div class="modal-images-section" id="modalImagesSection">
+                    <div class="images-grid" id="imagesGrid">
+                        <!-- Portfolio images will be dynamically loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Portfolio Gallery Section -->
+                <div class="modal-gallery" id="modalGallery">
+                    <h3 class="gallery-title">Project Gallery</h3>
+                    <div class="gallery-grid" id="galleryGrid">
+                        <!-- Gallery images will be dynamically loaded here -->
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Awards Section -->
+    <footer class="awards-section" id="awards">
+        <div class="awards-content">
+            <h2 class="awards-title">Professional Achievements</h2>
+            
+            <div class="awards-list">
+                <div class="award-item">
+                    <div class="award-project">Nectar Studio</div>
+                    <div class="award-organization">AWWWARDS</div>
+                    <div class="award-type">Site Of The Day</div>
+                    <div class="award-year">2024</div>
+                </div>
+                
+                <div class="award-item">
+                    <div class="award-project">DesignWave</div>
+                    <div class="award-organization">AWWWARDS</div>
+                    <div class="award-type">Site Of The Day</div>
+                    <div class="award-year">2023</div>
+                </div>
+                
+                <div class="award-item">
+                    <div class="award-project">Visionary</div>
+                    <div class="award-organization">Web Awards</div>
+                    <div class="award-type">Best Innovation</div>
+                    <div class="award-year">2023</div>
+                </div>
+                
+                <div class="award-item">
+                    <div class="award-project">Lunar</div>
+                    <div class="award-organization">MUSE Awards</div>
+                    <div class="award-type">Platinum Winner</div>
+                    <div class="award-year">2023</div>
+                </div>
+                
+                <div class="award-item">
+                    <div class="award-project">Pixel Forged</div>
+                    <div class="award-organization">CSS Awards</div>
+                    <div class="award-type">Top UI Design</div>
+                    <div class="award-year">2022</div>
+                </div>
+                
+                <div class="award-item">
+                    <div class="award-project">NectarMade</div>
+                    <div class="award-organization">AWWWARDS</div>
+                    <div class="award-type">Developer Award</div>
+                    <div class="award-year">2022</div>
+                </div>
+                
+                <div class="award-item">
+                    <div class="award-project">Personal Portfolio</div>
+                    <div class="award-organization">CSS Awards</div>
+                    <div class="award-type">Site of the Day</div>
+                    <div class="award-year">2022</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <span>© — 2025</span>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
