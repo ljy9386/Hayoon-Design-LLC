@@ -168,6 +168,7 @@ class ScrollManager {
         this.currentIndex = 0;
         this.isScrolling = false;
         this.scrollTimeout = null;
+        this.animatedSections = new Set(); // 애니메이션을 이미 적용한 섹션 추적
         this.init();
     }
 
@@ -205,10 +206,15 @@ class ScrollManager {
                     onEnter: () => {
                         this.currentIndex = index;
                         this.updateNavigation();
-                        this.animateSectionContent(section);
+                        // 첫 진입 시에만 애니메이션 실행
+                        const sectionId = section.className;
+                        if (!this.animatedSections.has(sectionId)) {
+                            this.animateSectionContent(section);
+                            this.animatedSections.add(sectionId);
+                        }
                     },
                     onLeave: () => {
-                        this.animateSectionOut(section);
+                        // 섹션 나갈 때 애니메이션 제거하지 않음
                     }
                 });
             }
@@ -236,7 +242,12 @@ class ScrollManager {
                     if (this.currentIndex !== index) {
                         this.currentIndex = index;
                         this.updateNavigation();
-                        this.animateSectionContent(section);
+                        // 첫 진입 시에만 애니메이션 실행
+                        const sectionId = section.className;
+                        if (!this.animatedSections.has(sectionId)) {
+                            this.animateSectionContent(section);
+                            this.animatedSections.add(sectionId);
+                        }
                     }
                 }
             }
@@ -305,10 +316,14 @@ class ScrollManager {
                 block: 'start'
             });
             
-            // 애니메이션 완료 후 콘텐츠 애니메이션
+            // 애니메이션 완료 후 콘텐츠 애니메이션 (첫 진입 시에만)
             setTimeout(() => {
                 this.updateNavigation();
-                this.animateSectionContent(targetSection);
+                const sectionId = targetSection.className;
+                if (!this.animatedSections.has(sectionId)) {
+                    this.animateSectionContent(targetSection);
+                    this.animatedSections.add(sectionId);
+                }
             }, 500);
         }
     }
@@ -344,32 +359,26 @@ class ScrollManager {
         const heroDescription = document.querySelector('.hero-description');
         const heroLogo = document.querySelector('.hero-logo-img');
         
+        // 이미 애니메이션된 요소는 건너뛰기
+        const elements = [heroTitle, heroImage, heroDescription, heroLogo];
+        if (elements.some(el => el && gsap.getProperty(el, "opacity") === 1)) {
+            return; // 이미 표시되어 있으면 애니메이션 건너뛰기
+        }
+        
         if (heroTitle) {
-            gsap.fromTo(heroTitle, 
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
-            );
+            gsap.to(heroTitle, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
         }
         
         if (heroImage) {
-            gsap.fromTo(heroImage, 
-                { opacity: 0, scale: 0.8 },
-                { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out", delay: 0.3 }
-            );
+            gsap.to(heroImage, { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out", delay: 0.3 });
         }
         
         if (heroDescription) {
-            gsap.fromTo(heroDescription, 
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.6 }
-            );
+            gsap.to(heroDescription, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.6 });
         }
         
         if (heroLogo) {
-            gsap.fromTo(heroLogo, 
-                { opacity: 0, scale: 0.5, rotation: -180 },
-                { opacity: 1, scale: 1, rotation: 0, duration: 1.5, ease: "power2.out", delay: 0.2 }
-            );
+            gsap.to(heroLogo, { opacity: 1, scale: 1, rotation: 0, duration: 1.5, ease: "power2.out", delay: 0.2 });
         }
     }
 
@@ -378,32 +387,29 @@ class ScrollManager {
         const workSubtitle = document.querySelector('.work-subtitle');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
         
+        // 이미 애니메이션된 요소는 건너뛰기
+        const elements = [workTitle, workSubtitle, ...portfolioItems];
+        if (elements.some(el => el && gsap.getProperty(el, "opacity") === 1)) {
+            return; // 이미 표시되어 있으면 애니메이션 건너뛰기
+        }
+        
         if (workTitle) {
-            gsap.fromTo(workTitle, 
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
-            );
+            gsap.to(workTitle, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
         }
         
         if (workSubtitle) {
-            gsap.fromTo(workSubtitle, 
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.2 }
-            );
+            gsap.to(workSubtitle, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.2 });
         }
         
         if (portfolioItems.length > 0) {
-            gsap.fromTo(portfolioItems, 
-                { opacity: 0, y: 50 },
-                { 
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 0.8, 
-                    ease: "power2.out", 
-                    stagger: 0.1,
-                    delay: 0.4
-                }
-            );
+            gsap.to(portfolioItems, { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.8, 
+                ease: "power2.out", 
+                stagger: 0.1,
+                delay: 0.4
+            });
         }
     }
 
@@ -412,32 +418,29 @@ class ScrollManager {
         const awardItems = document.querySelectorAll('.award-item');
         const copyright = document.querySelector('.copyright span');
         
+        // 이미 애니메이션된 요소는 건너뛰기
+        const elements = [awardsTitle, ...awardItems, copyright];
+        if (elements.some(el => el && gsap.getProperty(el, "opacity") === 1)) {
+            return; // 이미 표시되어 있으면 애니메이션 건너뛰기
+        }
+        
         if (awardsTitle) {
-            gsap.fromTo(awardsTitle, 
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
-            );
+            gsap.to(awardsTitle, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
         }
         
         if (awardItems.length > 0) {
-            gsap.fromTo(awardItems, 
-                { opacity: 0, y: 30 },
-                { 
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 0.6, 
-                    ease: "power2.out", 
-                    stagger: 0.1,
-                    delay: 0.3
-                }
-            );
+            gsap.to(awardItems, { 
+                opacity: 1, 
+                y: 0, 
+                duration: 0.6, 
+                ease: "power2.out", 
+                stagger: 0.1,
+                delay: 0.3
+            });
         }
         
         if (copyright) {
-            gsap.fromTo(copyright, 
-                { opacity: 0, scale: 0.8 },
-                { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out", delay: 0.8 }
-            );
+            gsap.to(copyright, { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out", delay: 0.8 });
         }
     }
 
@@ -470,9 +473,13 @@ class ScrollManager {
             );
         }
         
-        // 첫 번째 섹션 애니메이션
+        // 첫 번째 섹션 애니메이션 - 이미 진행 중이면 중단
         if (sections[0]) {
-            this.animateSectionContent(sections[0]);
+            const sectionId = sections[0].className;
+            if (!this.animatedSections.has(sectionId)) {
+                this.animateSectionContent(sections[0]);
+                this.animatedSections.add(sectionId);
+            }
         }
     }
 
@@ -817,9 +824,49 @@ class ImageLoader {
     }
 }
 
+// 초기 요소 숨기기 (DOM 로드 전 실행)
+function initializeElements() {
+    // Hero 섹션 요소들
+    const heroElements = {
+        '.hero-title': { opacity: 0, y: 50 },
+        '.hero-image': { opacity: 0, scale: 0.8 },
+        '.hero-description': { opacity: 0, y: 30 },
+        '.hero-logo-img': { opacity: 0, scale: 0.5, rotation: -180 }
+    };
+    
+    // Portfolio 섹션 요소들
+    const portfolioElements = {
+        '.work-title': { opacity: 0, y: 50 },
+        '.work-subtitle': { opacity: 0, y: 30 },
+        '.portfolio-item': { opacity: 0, y: 50 }
+    };
+    
+    // Awards 섹션 요소들
+    const awardsElements = {
+        '.awards-title': { opacity: 0, y: 50 },
+        '.award-item': { opacity: 0, y: 30 },
+        '.copyright span': { opacity: 0, scale: 0.8 }
+    };
+    
+    // 모든 요소 초기화
+    [heroElements, portfolioElements, awardsElements].forEach(elementSet => {
+        Object.entries(elementSet).forEach(([selector, props]) => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                if (element) {
+                    gsap.set(element, props);
+                }
+            });
+        });
+    });
+}
+
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing...');
+    
+    // 초기 요소 상태 설정
+    initializeElements();
     
     // 스크롤 매니저 초기화
     const scrollManager = new ScrollManager();
